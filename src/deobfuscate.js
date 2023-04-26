@@ -1,7 +1,7 @@
 import { Deobfuscator } from './index.js';
 
 if ((scriptArgs.length !== 2 && scriptArgs.length !== 4) || (scriptArgs.length === 4 && scriptArgs[2] !== '-o')) {
-    console.log('Usage: qjs --stack-size 10000000 --std -m deobfuscaste.js <input file> [-o <output file>]');
+    console.log('Usage: qjs --stack-size 10000000 --std -m deobfuscate.js <input file> [-o <output file>]');
     std.exit(1);
 }
 
