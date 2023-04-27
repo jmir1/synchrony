@@ -10,12 +10,6 @@ const ROOT_PATH = join(__dirname, '..'),
 
 const args = process.argv.slice(2)
 
-// should be 'production' | 'development'
-const env = 'production'
-
-// production enables certain things that make debugging harder
-const production = env === 'production'
-
 function postBuild() {
   console.log('Copying CLI ===')
   copyFileSync(join(SRC_PATH, 'deobfuscate.js'), join(DIST_PATH, 'deobfuscate.js'))
@@ -33,7 +27,7 @@ esbuild
     bundle: true,
     outdir: DIST_PATH,
     sourcemap: false,
-    minify: production,
+    minify: true,
 
     platform: 'browser',
     format: 'esm',
@@ -44,8 +38,8 @@ esbuild
     logLimit: process.env.CI ? 0 : 30,
 
     define: {
-      'process.env.NODE_DEBUG': process.env.NODE_DEBUG,
-      'process.env.NODE_ENV': env,
+      'process.env.NODE_ENV': 'production',
+      'process.env.NODE_DEBUG': false,
     },
   })
   .then(() => postBuild())

@@ -13,5 +13,5 @@ export abstract class Transformer<TOptions extends TransformerOptions> {
   protected buildOptions(options: Partial<TOptions>): TOptions {
     return { ...(options as any) }
   }
-  public abstract transform(context: Context): Promise<void>
+  public abstract transform(context: Context): void
 }

@@ -124,10 +124,10 @@ export class Deobfuscator {
     }
   }
 
-  public async deobfuscateNode(
+  public deobfuscateNode(
     node: Program,
     _options?: Partial<DeobfuscateOptions>
-  ): Promise<Program> {
+  ): Program {
     const options = this.buildOptions(_options)
 
     const defaultTransformers: TransformerArray = [
@@ -164,7 +164,7 @@ export class Deobfuscator {
 
     for (const t of context.transformers) {
       console.log('Running', t.name, 'transformer')
-      await t.transform(context)
+      t.transform(context)
     }
 
     if (options.rename) {
@@ -184,23 +184,23 @@ export class Deobfuscator {
       context.hash = sourceHash(source)
       for (const t of context.transformers) {
         console.log('(rename) Running', t.name, 'transformer')
-        await t.transform(context)
+        t.transform(context)
       }
     }
 
     return context.ast
   }
 
-  public async deobfuscateSource(
+  public deobfuscateSource(
     source: string,
     _options?: Partial<DeobfuscateOptions>
-  ): Promise<string> {
+  ): string {
     const options = this.buildOptions(_options)
     const acornOptions = this.buildAcornOptions(options)
     let ast = this.parse(source, acornOptions, options) as Program
 
     // perform transforms
-    ast = await this.deobfuscateNode(ast, options)
+    ast = this.deobfuscateNode(ast, options)
 
     source = escodegen.generate(ast, {
       sourceMapWithCode: true,
