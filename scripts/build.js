@@ -23,7 +23,6 @@ esbuild
   .build({
     entryPoints: [join(SRC_PATH, 'index.ts')],
 
-    watch: false,
     bundle: true,
     outdir: DIST_PATH,
     sourcemap: false,
@@ -39,7 +38,7 @@ esbuild
 
     define: {
       'process.env.NODE_ENV': 'production',
-      'process.env.NODE_DEBUG': false,
+      'process.env.NODE_DEBUG': 'false',
     },
   })
   .then(() => postBuild())
